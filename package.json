@@ -1,0 +1,30 @@
+{
+  "name": "asynctest-fetcher",
+  "description": "AsyncTest Fetcher Chrome panel",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "build": "node scripts/build-icons.mjs && wxt build",
+    "typecheck": "wxt prepare && vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "lucide": "1.43.0",
+    "morphicons": "1.7.1",
+    "reka-ui": "2.10.4",
+    "vue": "3.5.42"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.2.9",
+    "@wxt-dev/module-vue": "1.0.3",
+    "sharp": "0.35.4",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.11",
+    "wxt": "0.21.4"
+  }
+}

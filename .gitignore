@@ -1,0 +1,39 @@
+# Dependencies and generated extension artifacts
+node_modules/
+.output/
+.wxt/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local configuration and credentials (examples may be committed)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Editor, OS and temporary files
+.idea/
+.vscode/
+.DS_Store
+._*
+Thumbs.db
+*.swp
+*.swo
+*~
+.cache/
+.tmp/
+tmp/
+*.log
+
+# Keep verification artifacts outside the product repository
+playwright-report/
+test-results/
+reports/
+artifacts/
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*

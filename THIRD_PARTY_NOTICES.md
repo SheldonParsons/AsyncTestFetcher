@@ -1,0 +1,8 @@
+# Third-party assets
+
+- `src/ui/styles/motion.css` adapts the free **Panel reveal** CSS by Jakub Antalik / Transitions.dev: <https://transitions.dev/detail.html?t=panel-reveal>. It uses the site's [transition license](https://transitions.dev/terms.html), which permits modification and use within products. The transition snippets are not MIT-licensed; the site's tooling has a separate license. This project uses one transition within its UI and does not redistribute a transition library.
+- `InputFeedback.vue` adapts the free [Error state shake](https://transitions.dev/detail.html?t=error-state-shake) transition under the same terms: 280ms multi-segment shake, border transition and inline message fade. The demo controls and automatic demo reset are not included.
+- Icons use **Morphicons** with icon data from **Lucide**. The build includes the licenses for Vue, Reka UI, Morphicons and Lucide in `third-party-licenses.txt`.
+- `public/logo.svg` is the unmodified AsyncTest Fetcher logo supplied by the project owner: <https://asynctest.oss-cn-shenzhen.aliyuncs.com/asynctest_fetcher/asynctest_fetcher_logo.svg>. PNG icons are generated from this SVG for Chrome's manifest.
+- `public/asynctest-logo.svg` is the unmodified AsyncTest logo supplied by the project owner for the login page: <https://asynctest.oss-cn-shenzhen.aliyuncs.com/core/logo/logo_full.svg>.
+- `FetcherMark.vue` and `ui/motion/fetcherMotion.ts` adapt the user-approved local `login-clear-spectrum-motion.html` preview and the same supplied Fetcher SVG geometry. Preview controls/captions are not included. The original SVG asset is unchanged.
