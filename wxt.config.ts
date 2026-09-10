@@ -9,7 +9,7 @@ export default defineConfig({
     name: 'AsyncTest Fetcher',
     description: '在浏览器侧边栏中连接和配置 AsyncTest。',
     minimum_chrome_version: '125',
-    permissions: ['sidePanel', 'storage'],
+    permissions: ['sidePanel', 'storage', 'tabs', 'scripting', 'webNavigation'],
     optional_host_permissions: ['https://*/*', 'http://*/*'],
     action: {
       default_title: '打开 AsyncTest Fetcher',

@@ -12,6 +12,24 @@ export class AuthManager {
   private verified = new Map<string, { at: number; state: AuthState }>()
   private credentialEdits = new Map<string, number>()
 
+  async withSession<T>(action: (access: { service: ServiceConfig; userId: number; sessionId: string; token: string; assertCurrent: () => void }) => Promise<T>): Promise<T> {
+    const generation = this.generation
+    const state = await this.snapshot()
+    this.ensureCurrent(generation)
+    if (!state.service || !state.user || state.status !== 'authenticated') throw new ApiError('auth', '请先验证 AsyncTest 登录状态。')
+    const session = await readSession(state.service.url)
+    if (!session || session.id !== state.sessionId) throw new ApiError('stale', '登录状态已变化，请重试。')
+    this.ensureCurrent(generation)
+    try {
+      const result = await action({ service: state.service, userId: state.user.id, sessionId: session.id, token: session.token, assertCurrent: () => this.ensureCurrent(generation) })
+      this.ensureCurrent(generation)
+      return result
+    } catch (error) {
+      if (error instanceof ApiError && error.kind === 'auth' && generation === this.generation) await this.expire(state.service, session, generation)
+      throw error
+    }
+  }
+
   private write<T>(fn: () => Promise<T>): Promise<T> {
     const next = this.writes.then(fn, fn)
     this.writes = next.catch(() => {})

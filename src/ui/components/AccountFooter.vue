@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { AvatarFallback, AvatarImage, AvatarRoot, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRoot, DropdownMenuSeparator, DropdownMenuTrigger } from 'reka-ui'
 import type { AuthState } from '../../auth/contracts'
 import AppIcon from './AppIcon.vue'
+import { platformMenuKey } from '../../platforms/menu'
 
 defineProps<{ state: AuthState; busy: boolean }>()
 defineEmits<{ configure: []; logout: [] }>()
+const platformMenu = inject(platformMenuKey, null)
 </script>
 
 <template>
@@ -26,6 +29,14 @@ defineEmits<{ configure: []; logout: [] }>()
           </DropdownMenuLabel>
           <DropdownMenuSeparator class="account-menu-separator" />
           <DropdownMenuItem class="account-menu-item" :disabled="busy" @select="$emit('configure')"><AppIcon name="settings" :size="16" />服务配置<AppIcon class="account-menu-chevron" name="chevronRight" :size="14" /></DropdownMenuItem>
+          <template v-if="platformMenu">
+            <DropdownMenuSeparator class="account-menu-separator" />
+            <DropdownMenuLabel class="account-menu-group-label">平台绑定</DropdownMenuLabel>
+            <DropdownMenuItem class="account-menu-item" :disabled="busy || platformMenu.busy || !platformMenu.canEditName" @select="platformMenu.editName()"><AppIcon name="settings" :size="16" />修改平台名称</DropdownMenuItem>
+            <DropdownMenuItem class="account-menu-item" :disabled="busy || platformMenu.busy || !platformMenu.canEditProjects" @select="platformMenu.editProjects()"><AppIcon name="settings" :size="16" />调整 / 添加项目</DropdownMenuItem>
+            <DropdownMenuItem class="account-menu-item" :disabled="busy || platformMenu.busy || !platformMenu.canEditScope" @select="platformMenu.editScope()"><AppIcon name="globe" :size="16" />为当前路径单独绑定</DropdownMenuItem>
+            <DropdownMenuItem class="account-menu-item" :disabled="busy || platformMenu.busy || !platformMenu.canUnbind" @select="platformMenu.unbind()"><AppIcon name="logout" :size="16" />解除当前项目绑定</DropdownMenuItem>
+          </template>
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenuRoot>

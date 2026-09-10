@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import type { ServiceConfig } from '../../settings/service'
 import { useAuth } from '../../auth/useAuth'
 import AppIcon from '../../ui/components/AppIcon.vue'
@@ -10,10 +10,12 @@ import ServiceSettingsView from '../../ui/views/ServiceSettingsView.vue'
 import AccountView from '../../ui/views/AccountView.vue'
 import LoginSuccessTransition from '../../ui/components/LoginSuccessTransition.vue'
 import AccountFooter from '../../ui/components/AccountFooter.vue'
+import { platformMenuKey, type PlatformMenu } from '../../platforms/menu'
 
 type Page = 'loading' | 'welcome' | 'login' | 'settings' | 'account'
 const page = ref<Page>('loading')
 const settingsReturn = ref<Page>('welcome')
+provide(platformMenuKey, shallowRef<PlatformMenu | null>(null))
 let arrivalSequence = 0
 const arrival = shallowRef<{ runId: number; sessionId: string; serviceUrl: string } | null>(null)
 const auth = useAuth({ onLoginSuccess(next) {

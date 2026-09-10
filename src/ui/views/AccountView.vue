@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { AuthState } from '../../auth/contracts'
 import AppIcon from '../components/AppIcon.vue'
+import PlatformPanel from './PlatformPanel.vue'
 
 defineProps<{ state: AuthState; busy: boolean; error: string }>()
 defineEmits<{ retry: [] }>()
@@ -13,11 +14,7 @@ defineEmits<{ retry: [] }>()
       <p>{{ state.message }}</p>
       <button class="inline-button" :disabled="busy" @click="$emit('retry')">重新验证<AppIcon name="arrowRight" :size="14" /></button>
     </div>
-    <div v-else class="account-ready">
-      <img src="/logo.svg" alt="" width="36" height="36" />
-      <h1 id="account-title" tabindex="-1">捕获此刻，留住细节。</h1>
-      <p>捕获功能即将开放。</p>
-    </div>
+    <PlatformPanel v-else :key="state.user?.id" />
     <p v-if="error" class="field-error" role="alert">{{ error }}</p>
   </section>
 </template>

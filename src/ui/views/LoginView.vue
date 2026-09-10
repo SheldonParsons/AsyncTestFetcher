@@ -112,7 +112,6 @@ async function submit() {
       <p v-if="formError || preferenceError" class="login-form-error" role="alert">{{ formError || preferenceError }}</p>
       <button class="button primary" type="submit" :disabled="busy || preferenceBusy || !service">{{ busy ? '正在登录…' : '登录' }}<AppIcon name="arrowRight" /></button>
       <p v-if="!service" class="form-note">请先配置 AsyncTest 服务。</p>
-      <p v-else class="form-note">同一账号的新登录会使其他客户端登录失效。</p>
     </form>
 
     <ServiceSummary :service="service" @configure="$emit('configure')" />

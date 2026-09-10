@@ -19,7 +19,7 @@ export class AsyncTestClient {
 
   async request(path: string, options: { method?: 'GET' | 'POST'; body?: unknown; timeoutMs?: number } = {}): Promise<unknown> {
     // 路径由 API 模块定义；不要接受页面传来的任意 URL，也不要自动补 /api 或 /server。
-    if (!path.startsWith('/') || path.startsWith('//') || path.includes('..')) throw new ApiError('input', '无效的接口路径。')
+    if (!path.startsWith('/') || path.startsWith('//') || path.split('?')[0]?.split('/').includes('..')) throw new ApiError('input', '无效的接口路径。')
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? 15000)
     try {
@@ -45,7 +45,7 @@ export class AsyncTestClient {
       }
       if (isAuthFailure(response.status, payload)) throw new ApiError('auth', '登录已失效，请重新登录。', response.status)
       if (!response.ok) {
-        const message = response.status === 400 ? '账号或密码错误。'
+        const message = response.status === 400 ? (path === '/anonymous/login/' ? '账号或密码错误。' : '请求参数有误，请重新操作。')
           : response.status === 429 ? '尝试次数过多，请稍后再试。'
           : response.status === 403 ? '当前账号没有访问权限。'
           : response.status === 404 ? '没有找到接口，请检查后端服务地址及路径前缀。'
